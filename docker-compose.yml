@@ -1,11 +1,17 @@
-version: '3.9'
+networks:
+  proxy-network:
+    external: true
+
+  jam_network:
+    external: true
+
 services:
   api:
     build: .
-    image: medusastudio/jam-backend
+    image: jam-backend
     container_name: jam_api
     ports:
-      - 3000:3000
+      - 3000
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -16,7 +22,7 @@ services:
     image: postgres:13.3
     container_name: jam_postgres
     ports:
-      - 5433:5432
+      - 5432
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -26,7 +32,3 @@ services:
       - .:/var/lib/postgresql/data
     networks:
       - jam_network
-
-networks:
-  jam_network:
-    external: true
