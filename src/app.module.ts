@@ -30,8 +30,8 @@ import { ConfigModule } from '@nestjs/config';
       type: 'postgres',
       host: 'localhost',
       port: 5433,
-      username: 'medusa',
-      password: 'medusa',
+      username: 'user',
+      password: 'password',
       database: 'jam',
       schema: 'public',
       entities: [
