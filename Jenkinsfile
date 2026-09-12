@@ -42,12 +42,16 @@ pipeline {
           sh 'docker-compose -f docker-compose.development.yml push'
         }
       }
-
       stage('Deploy to Production') {
         steps {
           echo 'Deploying....'
-          sh '''DOCKER_HOST=ssh://${DEPLOY_USER}@${DEPLOY_HOST} docker-compose -f docker-compose.development.yml down'''
-          sh '''DOCKER_HOST=ssh://${DEPLOY_USER}@${DEPLOY_HOST} docker-compose -f docker-compose.development.yml up -d'''
+
+          withCredentials([file(credentialsId: 'env-development', variable: 'secretFile')]) {
+            sh 'touch .env'
+            sh 'cat $secretFile > .env'
+            sh '''DOCKER_HOST=ssh://${DEPLOY_USER}@${DEPLOY_HOST} docker-compose -f docker-compose.development.yml down'''
+            sh '''DOCKER_HOST=ssh://${DEPLOY_USER}@${DEPLOY_HOST} docker-compose -f docker-compose.development.yml up -d'''
+          }
         }
       }
 
@@ -62,10 +66,10 @@ pipeline {
       //         git checkout development ;
       //         git pull ;
 
-      //         ./scripts/deploy.sh ;
-      //       "
-      //     '''
-      //   }
-      // }
+    //         ./scripts/deploy.sh ;
+    //       "
+    //     '''
+    //   }
+    // }
     }
 }
