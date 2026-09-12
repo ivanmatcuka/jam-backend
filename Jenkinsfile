@@ -25,15 +25,15 @@ pipeline {
       stage('Build for Development') {
         steps {
           echo 'Building....'
-          sh "docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}"
+          sh '''docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}'''
           sh 'docker compose -f docker-compose-.development.yml build'
         }
       }
 
       stage('Push Development Version') {
         steps {
-          echo 'Pushin....'
-          sh "docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}"
+          echo 'Pushing....'
+          sh '''docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}'''
           sh 'docker compose -f docker-compose-.development.yml push'
         }
       }
