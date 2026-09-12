@@ -54,22 +54,5 @@ pipeline {
           }
         }
       }
-
-      // stage('Deploy') {
-      //   steps {
-      //     echo 'Deploying...'
-      //     sh '''
-      //       ssh ${DEPLOY_USER}@${DEPLOY_HOST} "
-      //         cd ./${PROJECT_SLUG} ;
-
-      //         git reset --hard ;
-      //         git checkout development ;
-      //         git pull ;
-
-    //         ./scripts/deploy.sh ;
-    //       "
-    //     '''
-    //   }
-    // }
     }
 }
