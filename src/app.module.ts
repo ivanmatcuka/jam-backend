@@ -26,6 +26,7 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.POSTGRES_HOST || 'localhost',
@@ -60,7 +61,6 @@ import { ConfigModule } from '@nestjs/config';
     UserGenresModule,
     AuthModule,
     CaslModule,
-    ConfigModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],
