@@ -28,11 +28,11 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5433,
-      username: 'user',
-      password: 'password',
-      database: 'jam',
+      host: process.env.POSTGRES_HOST || 'localhost',
+      port: 5432,
+      username: process.env.POSTGRES_USER || 'user',
+      password: process.env.POSTGRES_PASSWORD || 'password',
+      database: process.env.POSTGRES_DB || 'jam',
       schema: 'public',
       entities: [
         User,
