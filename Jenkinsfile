@@ -10,7 +10,7 @@ pipeline {
       DEPLOY_HOST = credentials('deploy-host')
 
       DOCKERHUB_PASSWORD = credentials('dockerhub-password')
-      DOCKERHUB_USER = credentials('dockerhub-user')
+      DOCKERHUB_USER = credentials('dockerhub-username')
     }
 
     stages {
