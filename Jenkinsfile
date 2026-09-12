@@ -6,8 +6,8 @@ pipeline {
     }
 
     environment {
-      // DEPLOY_USER = credentials('deploy-user')
-      // DEPLOY_HOST = credentials('deploy-host')
+      DEPLOY_USER = credentials('deploy-user')
+      DEPLOY_HOST = credentials('deploy-host')
 
       DOCKERHUB_PASSWORD = credentials('dockerhub-password')
       DOCKERHUB_USER = credentials('dockerhub-username')
@@ -22,10 +22,16 @@ pipeline {
         }
       }
 
+      stage('Set Up Docker') {
+        steps {
+          sh 'chmod +x /usr/local/bin/docker-compose'
+          sh '''docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}'''
+        }
+      }
+
       stage('Build for Development') {
         steps {
           echo 'Building....'
-          sh '''docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}'''
           sh 'docker-compose -f docker-compose.development.yml build'
         }
       }
@@ -33,8 +39,15 @@ pipeline {
       stage('Push Development Version') {
         steps {
           echo 'Pushing....'
-          sh '''docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}'''
           sh 'docker-compose -f docker-compose.development.yml push'
+        }
+      }
+
+      stage('Deploy to Production') {
+        steps {
+          echo 'Deploying....'
+          sh '''DOCKER_HOST=ssh://${DEPLOY_USER}@${DEPLOY_USER} docker-compose -f docker-compose.development.yml down'''
+          sh '''DOCKER_HOST=ssh://${DEPLOY_USER}@${DEPLOY_USER} docker-compose -f docker-compose.development.yml up -d'''
         }
       }
 
