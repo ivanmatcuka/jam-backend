@@ -28,3 +28,6 @@ services:
 networks:
   jam_network:
     driver: bridge
+
+volumes:
+  jam_pg_data:
