@@ -16,6 +16,8 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PGDATA: '/var/lib/postgresql/data/pgdata'
+    volumes:
+      - jam_pg_data:/var/lib/postgresql/data
     networks:
       - jam_network
 
