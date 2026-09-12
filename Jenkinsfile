@@ -26,7 +26,7 @@ pipeline {
         steps {
           echo 'Building....'
           sh '''docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}'''
-          sh 'docker compose -f docker-compose.development.yml build'
+          sh 'docker-compose -f docker-compose.development.yml build'
         }
       }
 
@@ -34,7 +34,7 @@ pipeline {
         steps {
           echo 'Pushing....'
           sh '''docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}'''
-          sh 'docker compose -f docker-compose.development.yml push'
+          sh 'docker-compose -f docker-compose.development.yml push'
         }
       }
 
