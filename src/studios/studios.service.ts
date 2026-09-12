@@ -1,7 +1,12 @@
 import { CreateStudioDto } from './dto/create-studio.dto';
 import { UpdateStudioDto } from './dto/update-studio.dto';
 import { Studio } from './entities/studio.entity';
-import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  ForbiddenException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, Repository } from 'typeorm';
 import { REQUEST } from '@nestjs/core';
@@ -33,7 +38,7 @@ export class StudiosService {
     return this.studiosRepository.find(options);
   }
 
-  findOne(options?: FindManyOptions<Studio>) {
+  findOne(options: FindManyOptions<Studio>) {
     return this.studiosRepository.findOne(options);
   }
 
@@ -44,6 +49,10 @@ export class StudiosService {
   async update(id: number, updateStudioDto: UpdateStudioDto) {
     const studio = await this.findById(id);
     const ability = this.caslAbilityFactory.createForUser(this.request.user);
+
+    if (!studio) {
+      throw new NotFoundException('Studio not found');
+    }
 
     try {
       ForbiddenError.from(ability)
@@ -60,6 +69,10 @@ export class StudiosService {
   async remove(id: number) {
     const studio = await this.findById(id);
     const ability = this.caslAbilityFactory.createForUser(this.request.user);
+
+    if (!studio) {
+      throw new NotFoundException('Studio not found');
+    }
 
     try {
       ForbiddenError.from(ability)

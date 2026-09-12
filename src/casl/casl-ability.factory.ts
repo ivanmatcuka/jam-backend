@@ -30,7 +30,7 @@ export type AppAbility = MongoAbility<[Action, Subjects]>;
 export class CaslAbilityFactory {
   createForUser(user: JwtPayload) {
     return defineAbility<AppAbility>(
-      (can, cannot) => {
+      (can) => {
         if (user.role === Role.Admin) {
           can(Action.Manage, 'all');
         } else {
