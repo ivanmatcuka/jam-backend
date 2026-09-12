@@ -7,14 +7,14 @@ services:
     image: ivanmatcuka/jam_backend
     container_name: jam_backend
     ports:
-      - 3000
+      - '3001:3000'
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     networks:
       - jam_network
 
-  postgres:
+  jam_postgres:
     image: postgres:13.3
     container_name: jam_postgres
     ports:

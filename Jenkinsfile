@@ -46,8 +46,8 @@ pipeline {
       stage('Deploy to Production') {
         steps {
           echo 'Deploying....'
-          sh '''DOCKER_HOST=ssh://${DEPLOY_USER}@${DEPLOY_USER} docker-compose -f docker-compose.development.yml down'''
-          sh '''DOCKER_HOST=ssh://${DEPLOY_USER}@${DEPLOY_USER} docker-compose -f docker-compose.development.yml up -d'''
+          sh '''DOCKER_HOST=ssh://${DEPLOY_USER}@${DEPLOY_HOST} docker-compose -f docker-compose.development.yml down'''
+          sh '''DOCKER_HOST=ssh://${DEPLOY_USER}@${DEPLOY_HOST} docker-compose -f docker-compose.development.yml up -d'''
         }
       }
 

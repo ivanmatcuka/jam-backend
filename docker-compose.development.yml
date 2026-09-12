@@ -6,7 +6,7 @@ services:
     image: ivanmatcuka/jam_backend
     container_name: jam_backend
     ports:
-      - 3000
+      - '3001:3000'
     networks:
       - jam_network
 
