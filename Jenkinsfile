@@ -6,8 +6,8 @@ pipeline {
     }
 
     environment {
-      DEPLOY_USER = credentials('deploy-user')
-      DEPLOY_HOST = credentials('deploy-host')
+      // DEPLOY_USER = credentials('deploy-user')
+      // DEPLOY_HOST = credentials('deploy-host')
 
       DOCKERHUB_PASSWORD = credentials('dockerhub-password')
       DOCKERHUB_USER = credentials('dockerhub-username')
